@@ -13,11 +13,10 @@ def md5(msg):
 
     pad_msg = bin_msg + '1'
 
-    while (len(pad_msg) % 512) != 448:
+    while len(pad_msg) % 512 != 448:
         pad_msg += '0'
 
     lit_en_msg_len = struct.pack("<Q", og_msg_len)
-
     pad_msg += "".join(format(byte, '08b') for byte in lit_en_msg_len)
 
     first512 = pad_msg[:512]
@@ -54,7 +53,6 @@ def md5(msg):
         cur_sine = sine_constants[step]
 
         temp_sum = (A + F_val + cur_word + cur_sine) & 0xFFFFFFFF
-
         new_B = (B + left_rotate(temp_sum, shift_constants[step])) & 0xFFFFFFFF
 
         A, D, C, B = D, C, B, new_B
